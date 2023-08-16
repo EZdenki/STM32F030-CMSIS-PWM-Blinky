@@ -1,12 +1,37 @@
-//  Multi-channel PWM Blinky with only CMSIS (no HAL)
-//  Target: STM32F030F4xx
-//  Mike Shegedin, 07/2023
+//  main-plus-advanced-timer.c
+//    Multi-channel PWM Blinky with only CMSIS (no HAL)
+//
+//    Mike Shegedin, EZdenki.com
+//
+//    Version 1.0     16 Aug 2023   Cleaned up comments
+//    Version 0.9        Jul 2023   Started
 //
 //  This project will build upon STM32F030-PWM-Blinky main.c in order to demonstrate how to
 //  use the Advanced Timer by adding Advanced Timer 1 Channel 3 and the complement of Timer 1
-//  Channel 3, which is TIM1_CH3N. 
+//  Channel 3, which is Timer 1 Channel 3N. 
+//
+//  To Build:
+//  =========
+//  To use this program, rename main.c to main.c.old, and then rename this file to main.c,
+//  and then use "make clean && make" to build as normal.
+//
+//  Hardware Setup:
+//  ===============
+//
+//  Attach LEDs and current-limiting resistors to the following pins:
+//  /===========/=========================/=========/======/=============
+//  | STM32F030 |      Timer Number       |  Timer  | GPIO | Alternate  |
+//  |    Pin    |        and Type         | Channel |  Pin |  Function  |
+//  |-----------|-------------------------|---------|------|------------|
+//  |    13     | General Purpose Timer 3 |  Ch 2   |  A7  | Alt Func 1 |
+//  |    18     |     Advanced Timer 1    |  Ch 3   |  A10 | Alt Func 2 |
+//  |    14     |     Advanced Timer 1    |  Ch 3N  |  B1  | Alt Func 2 |
+//  /===========/=========================/=========/======/=============
+
 
 #include "stm32f030x6.h"
+
+
 int main( void ){
 
   // 1. Enable GPIO Port A and Port B
@@ -58,7 +83,7 @@ int main( void ){
   TIM1->BDTR |= TIM_BDTR_MOE;
 
   // Endless Loop
-  while( 1 )
-  {
-  }
+  while( 1 ) ;
+
+  return 0;
 }

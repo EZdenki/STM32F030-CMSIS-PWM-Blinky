@@ -1,11 +1,17 @@
-//  Minimalist PWM Blinky with only CMSIS (no HAL)
+//  main.c
+//  Minimalist PWM Blinky with only CMSIS (no HAL). Demonstrates how to set up basic PWM.
+//
+//    Mike Shegedin, EZdenki.com
+//
+//    Version 1.0   16 Aug 2023   Cleaned up code. Updated core files.
+//    Version 0.9      Jul 2023   Started
+//
 //  Target: STM32F030F4xx
-//  Mike Shegedin, 04/2023
 //
 //  This projects demostrates how to use PWM to flash an LED. Timer 3, channel 2 will be
 //  used to flash an LED attached to GPIO A7 (pin 13 on the STM32F030F4).
 //
-//  Attach an anode (+ side) of LED to GPIO Pin A7. Then connect a 1k resister between the
+//  Attach an anode (+ side) of LED to GPIO A7 (pin 13). Then connect a 1k resister between the
 //  and cathode (- side) of the LED and ground.
 
 //  Steps Involved. Specific to GPIO:
@@ -30,9 +36,10 @@
 //     register.
 // 10. Enable the clock counter via the TIM_CR1_CEN bit in the TIM2 CR1 register.
 
-void SystemInit( void );
 
-#include "stm32f030x6.h"
+#include "stm32f030x6.h"    // Core header file for the STM32F030
+
+
 int main( void ){
 
   // =========================================
@@ -72,7 +79,7 @@ int main( void ){
   TIM3->CR1 |= TIM_CR1_CEN; // Tim3_Ch2_PA7_AF1
 
   // Endless Loop
-  while( 1 )
-  {
-  }
+  while( 1 ) ;
+  
+  return 0;
 }
