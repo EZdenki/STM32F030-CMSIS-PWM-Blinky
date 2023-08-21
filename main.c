@@ -1,21 +1,41 @@
+//  ==========================================================================================
 //  main.c
-//  Minimalist PWM Blinky with only CMSIS (no HAL). Demonstrates how to set up basic PWM.
-//
-//    Mike Shegedin, EZdenki.com
-//
+//  ------------------------------------------------------------------------------------------
+//  Minimalist PWM Blinky with only CMSIS (no HAL). Demonstrates how to set up basic PWM and
+//  use it to flash an LED. Timer 3, channel 2 will be used to flash an LED attached to
+//  GPIO A7 (pin 13 on the STM32F030F4).
+//  ------------------------------------------------------------------------------------------
+//  https://github.com/EZdenki/STM32F030-CMSIS-PWM-Blinky
+//  Released under the MIT License
+//  Copyright (c) 2023
+//  Mike Shegedin, EZdenki.com
 //    Version 1.0   16 Aug 2023   Cleaned up code. Updated core files.
 //    Version 0.9      Jul 2023   Started
+//  ------------------------------------------------------------------------------------------
+//  Target Device: STM32F030F4xx
+//                 LED, and 1k resistor
+//  ------------------------------------------------------------------------------------------
+//  Hardware Setup:
+//    Wire an LED and 1k resistor between pin 13 and ground.
+//    Connect the four pins from the ST-Link V2 as shown below:
 //
-//  Target: STM32F030F4xx
+//                STM32F030F4xx               
+//                ____  ____
+//                |1   \/  20| --- SWCLK*
+//                |2       19| --- SWDIO*
+//                |3       18|
+//                |4       17|
+//                |5       16| --- VCC* (3.3 V)
+//                |6       15| --- GND*
+//                |7       14|
+//                |8       13| --- [+LED-] --- [1k] --- GND
+//                |9       13|
+//                |10      11|
+//                ------------
+//                             * Connection to ST-Link V2
+//  ------------------------------------------------------------------------------------------
+//  Basic Programming Steps:
 //
-//  This projects demostrates how to use PWM to flash an LED. Timer 3, channel 2 will be
-//  used to flash an LED attached to GPIO A7 (pin 13 on the STM32F030F4).
-//
-//  Attach an anode (+ side) of LED to GPIO A7 (pin 13). Then connect a 1k resister between the
-//  and cathode (- side) of the LED and ground.
-
-//  Steps Involved. Specific to GPIO:
-
 //  1. Enable GPIO Port A by setting the RCC_APBENR_GPIOAEN bit in the RCC AHBENR register.
 //  2. Enable TIMER 3 by setting the RCC_APB1ENR_TIM3EN bit in the RCC APB1ENR register.
 //  3. Set GPIOA7 to alternate function mode by changing the GPIOA MODER7 bits to 0b10 in
@@ -35,6 +55,7 @@
 //     TIM_CCER_CC2E bit in the TIM3 CCER register.
 //     register.
 // 10. Enable the clock counter via the TIM_CR1_CEN bit in the TIM2 CR1 register.
+//  ==========================================================================================
 
 
 #include "stm32f030x6.h"    // Core header file for the STM32F030
