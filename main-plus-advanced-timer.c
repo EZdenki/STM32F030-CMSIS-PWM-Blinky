@@ -1,32 +1,54 @@
-//  main-plus-advanced-timer.c
-//    Multi-channel PWM Blinky with only CMSIS (no HAL)
-//
-//    Mike Shegedin, EZdenki.com
-//
-//    Version 1.0     16 Aug 2023   Cleaned up comments
-//    Version 0.9        Jul 2023   Started
-//
+//  ==========================================================================================
+//  main-plus-advanced-timer.
+//  ------------------------------------------------------------------------------------------
 //  This project will build upon STM32F030-PWM-Blinky main.c in order to demonstrate how to
 //  use the Advanced Timer by adding Advanced Timer 1 Channel 3 and the complement of Timer 1
 //  Channel 3, which is Timer 1 Channel 3N. 
-//
+//  ------------------------------------------------------------------------------------------
+//  https://github.com/EZdenki/STM32F030-CMSIS-PWM-Blinky
+//  Released under the MIT License
+//  Copyright (c) 2023
+//  Mike Shegedin, EZdenki.com
+//    Version 1.0   16 Aug 2023   Cleaned up code. Updated core files.
+//    Version 0.9      Jul 2023   Started
+//  ------------------------------------------------------------------------------------------
+//  Target Devices: STM32F030F4xx
+//                  3 LEDs, and 3 1k resistors
+//  ------------------------------------------------------------------------------------------
 //  To Build:
-//  =========
-//  To use this program, rename main.c to main.c.old, and then rename this file to main.c,
-//  and then use "make clean && make" to build as normal.
-//
+//    To use this program, rename main.c to main.c.old, and then rename this file to main.c,
+//    and then use "make clean && make" to build as normal.
+//  ------------------------------------------------------------------------------------------
 //  Hardware Setup:
-//  ===============
+//    Wire an LED and 1k resistor between pin 13 and ground.
+//    Connect the four pins from the ST-Link V2 as shown below:
 //
-//  Attach LEDs and current-limiting resistors to the following pins:
-//  /===========/=========================/=========/======/=============
-//  | STM32F030 |      Timer Number       |  Timer  | GPIO | Alternate  |
-//  |    Pin    |        and Type         | Channel |  Pin |  Function  |
-//  |-----------|-------------------------|---------|------|------------|
-//  |    13     | General Purpose Timer 3 |  Ch 2   |  A7  | Alt Func 1 |
-//  |    18     |     Advanced Timer 1    |  Ch 3   |  A10 | Alt Func 2 |
-//  |    14     |     Advanced Timer 1    |  Ch 3N  |  B1  | Alt Func 2 |
-//  /===========/=========================/=========/======/=============
+//                                 STM32F030F4xx               
+//                                   ____  ____
+//                                  |1   \/  20| --- SWCLK*
+//                                  |2       19| --- SWDIO*
+//                                  |3       18| --- [+LED-] --- [1k] --- GND
+//     GND --- [1k] --- [-LED+] --- |4       17|
+//                                  |5       16| --- VCC* (3.3 V)
+//                                  |6       15| --- GND*
+//                                  |7       14|
+//                                  |8       13| --- [+LED-] --- [1k] --- GND
+//                                  |9       13|
+//                                  |10      11|
+//                                  ------------
+//                                              * Connection to ST-Link V2
+//
+//    Attach LEDs and current-limiting resistors to the following pins:
+//    /===========/=========================/=========/======/=============
+//    | STM32F030 |      Timer Number       |  Timer  | GPIO | Alternate  |
+//    |    Pin    |        and Type         | Channel |  Pin |  Function  |
+//    |-----------|-------------------------|---------|------|------------|
+//    |    13     | General Purpose Timer 3 |  Ch 2   |  A7  | Alt Func 1 |
+//    |    18     |     Advanced Timer 1    |  Ch 3   |  A10 | Alt Func 2 |
+//    |    14     |     Advanced Timer 1    |  Ch 3N  |  B1  | Alt Func 2 |
+//    /===========/=========================/=========/======/=============
+//
+//  ==========================================================================================
 
 
 #include "stm32f030x6.h"
