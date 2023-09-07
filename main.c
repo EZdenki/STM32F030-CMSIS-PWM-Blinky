@@ -45,6 +45,7 @@
 //     datasheet) to 1.
 //  5. Set the Timer 3 Channel 2 output compare mode to PWM Mode 1 by setting the
 //     OC2M[2:0] bits in the TIM3 CCMR1 register to 0b110.
+//     NOte that OC2M means Output-compare Channel 2 Mode
 //  6. Set the prescaler via the TIM3 PSC register. A prescaler of 999 will divide the clock
 //     by 1000, making the ARR period counter units into 1/8000 s.
 //  7. Set PWM period (and, thus, the frequency) via the TIM3 ARR register. With a prescaler
@@ -53,7 +54,7 @@
 //     would be 4000/8000 = 50%.
 //  9. Enable output Timer 3 Channel 2 to be output to the GPIO pin by setting the
 //     TIM_CCER_CC2E bit in the TIM3 CCER register.
-//     register.
+//     Note that CC2E means Capture-compare Channel 2 Enable bit
 // 10. Enable the clock counter via the TIM_CR1_CEN bit in the TIM2 CR1 register.
 //  ==========================================================================================
 
